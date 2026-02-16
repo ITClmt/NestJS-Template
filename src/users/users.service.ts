@@ -1,4 +1,4 @@
-import { Injectable, ConflictException } from '@nestjs/common';
+import { Injectable, ConflictException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as argon2 from 'argon2';
@@ -26,17 +26,12 @@ export class UsersService {
     }
 
     async findById(id: string) {
-        return this.prisma.user.findUnique({
+        const user = await this.prisma.user.findUnique({
             where: { id },
             select: userSelect
         });
-    }
-
-    async findByEmail(email: string) {
-        return this.prisma.user.findUnique({
-            where: { email },
-            select: userSelect
-        });
+        if (!user) throw new NotFoundException('Utilisateur non trouvé');
+        return user;
     }
 
     async create(createUserDto: CreateUserDto) {

@@ -1,4 +1,4 @@
-import { Controller, Post, Body, HttpCode, HttpStatus, Get, Query, DefaultValuePipe, ParseIntPipe } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode, HttpStatus, Get, Query, DefaultValuePipe, ParseIntPipe, Param } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 
@@ -18,6 +18,12 @@ export class UsersController {
             skip,
             take: limit,
         });
+    }
+
+    @Get(':id')
+    @HttpCode(HttpStatus.OK)
+    async findById(@Param('id') id: string) {
+        return this.userService.findById(id);
     }
 
     @Post()
