@@ -3,6 +3,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as argon2 from 'argon2';
 import { Prisma } from 'src/generated/prisma/client';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 const userSelect = {
     id: true,
@@ -16,6 +17,13 @@ const userSelect = {
 @Injectable()
 export class UsersService {
     constructor(private readonly prisma: PrismaService) { }
+
+    private handlePrismaError(error: unknown): never {
+        if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+            throw new ConflictException('Cet email est déjà utilisé');
+        }
+        throw error;
+    }
 
     async findAll(params: { skip?: number; take?: number }) {
         return this.prisma.user.findMany({
@@ -45,10 +53,30 @@ export class UsersService {
                 select: userSelect
             });
         } catch (error) {
-            if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
-                throw new ConflictException('Cet email est déjà utilisé');
-            }
-            throw error;
+            this.handlePrismaError(error);
         }
+    }
+
+    async update(id: string, updateUserDto: UpdateUserDto) {
+        const { email, password, name } = updateUserDto;
+
+        const user = await this.findById(id);
+
+        const hashedPassword = password ? await argon2.hash(password) : undefined;
+
+        try {
+            return await this.prisma.user.update({
+                where: { id: user.id },
+                data: { email, password: hashedPassword, name },
+                select: userSelect
+            });
+        } catch (error) {
+            this.handlePrismaError(error);
+        }
+    }
+
+    async delete(id: string) {
+        await this.findById(id);
+        return this.prisma.user.delete({ where: { id } });
     }
 }
