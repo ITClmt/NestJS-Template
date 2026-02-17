@@ -42,6 +42,13 @@ export class UsersService {
         return user;
     }
 
+    // ⚠️ Intentionally returns the password hash — needed for auth verification
+    async findByEmail(email: string) {
+        return this.prisma.user.findUnique({
+            where: { email }
+        });
+    }
+
     async create(createUserDto: CreateUserDto) {
         const { email, password, name } = createUserDto;
 
