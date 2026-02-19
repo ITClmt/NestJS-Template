@@ -1,0 +1,23 @@
+info:
+  name: Login
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: http://localhost:3000/auth/logout
+  body:
+    type: json
+    data: |-
+      {
+        refreshToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYzI0MzZmMC0zYWY1LTRlNDYtOWRjZC05Y2E1MjdhZTU3ZGEiLCJpYXQiOjE3NzE1NDAwNzksImV4cCI6MTc3MjE0NDg3OX0.SdwgMsOGsDnuKlPaK5hIYsTE7UTRdXk60t0kEjILWJ4"
+      }
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYzI0MzZmMC0zYWY1LTRlNDYtOWRjZC05Y2E1MjdhZTU3ZGEiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc3MTU0MDA3OSwiZXhwIjoxNzcxNTQwOTc5fQ.mK6Rfv1_03gCfryP19Jcaj9cNdvvIWijJB0K9kpwjRg
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

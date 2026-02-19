@@ -6,6 +6,9 @@ info:
 http:
   method: GET
   url: http://localhost:3000/users?take=1
+  headers:
+    - name: ""
+      value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYzI0MzZmMC0zYWY1LTRlNDYtOWRjZC05Y2E1MjdhZTU3ZGEiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc3MTU0MDE0NiwiZXhwIjoxNzcxNTQxMDQ2fQ.4lLNqe4hCiRJ6lpaORoKegaNkiTUk0ktXw5NEHSiOrg
   params:
     - name: take
       value: "1"

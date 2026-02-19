@@ -1,9 +1,9 @@
 import { Injectable, ConflictException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateUserDto } from './dto/create-user.dto';
 import * as argon2 from 'argon2';
 import { Prisma } from 'src/generated/prisma/client';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 
 const userSelect = {
     id: true,
@@ -65,17 +65,20 @@ export class UsersService {
     }
 
     async update(id: string, updateUserDto: UpdateUserDto) {
-        const { email, password, name } = updateUserDto;
+        await this.findById(id);
 
-        const user = await this.findById(id);
-
-        const hashedPassword = password ? await argon2.hash(password) : undefined;
+        const data: Prisma.UserUpdateInput = {};
+        if (updateUserDto.email !== undefined) data.email = updateUserDto.email;
+        if (updateUserDto.name !== undefined) data.name = updateUserDto.name;
+        if (updateUserDto.password !== undefined) {
+            data.password = await argon2.hash(updateUserDto.password);
+        }
 
         try {
             return await this.prisma.user.update({
-                where: { id: user.id },
-                data: { email, password: hashedPassword, name },
-                select: userSelect
+                where: { id },
+                data,
+                select: userSelect,
             });
         } catch (error) {
             this.handlePrismaError(error);
@@ -84,6 +87,6 @@ export class UsersService {
 
     async delete(id: string) {
         await this.findById(id);
-        return this.prisma.user.delete({ where: { id } });
+        await this.prisma.user.delete({ where: { id } });
     }
 }

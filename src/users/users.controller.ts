@@ -1,6 +1,5 @@
-import { Controller, Post, Body, HttpCode, HttpStatus, Get, Query, DefaultValuePipe, ParseIntPipe, Param, Delete, Patch, ParseUUIDPipe } from '@nestjs/common';
+import { Controller, Body, HttpCode, HttpStatus, Get, Query, DefaultValuePipe, ParseIntPipe, Param, Delete, Patch, ParseUUIDPipe } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
@@ -25,12 +24,6 @@ export class UsersController {
     @HttpCode(HttpStatus.OK)
     async findById(@Param('id', ParseUUIDPipe) id: string) {
         return this.userService.findById(id);
-    }
-
-    @Post()
-    @HttpCode(HttpStatus.CREATED)
-    async create(@Body() createUserDto: CreateUserDto) {
-        return this.userService.create(createUserDto);
     }
 
     @Patch(':id')

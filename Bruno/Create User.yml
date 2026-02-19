@@ -5,13 +5,13 @@ info:
 
 http:
   method: POST
-  url: http://localhost:3000/users
+  url: http://localhost:3000/auth/register
   body:
     type: json
     data: |-
       {
         "email": "test@example.com",
-        "password": "monSuperMotDePasse123",
+        "password": "Oasis91350?",
         "name": "Jean Dupont"
       }
   auth: inherit
