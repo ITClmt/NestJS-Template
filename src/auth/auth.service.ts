@@ -56,14 +56,13 @@ export class AuthService {
             throw new UnauthorizedException('Refresh token invalide ou expiré');
         }
 
-        // 2. Récupération de tous les tokens du user + recherche par argon2.verify
         const storedTokens = await this.prisma.refreshToken.findMany({
             where: { userId: payload.sub },
         });
 
         for (const stored of storedTokens) {
             if (await argon2.verify(stored.token, refreshToken)) {
-                return { payload, matchedToken: stored }; // on retourne les deux pour la suite
+                return { payload, matchedToken: stored };
             }
         }
 
