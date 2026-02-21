@@ -7,6 +7,7 @@ import { ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './guards/auth.guard';
 import { RolesGuard } from './guards/role.guard';
+import { TokenCleanupService } from './token-cleanup.service';
 
 @Module({
   imports: [
@@ -21,10 +22,12 @@ import { RolesGuard } from './guards/role.guard';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, RolesGuard, {
-    provide: APP_GUARD,
-    useClass: AuthGuard,
-  },],
+  providers: [
+    AuthService,
+    TokenCleanupService,
+    { provide: APP_GUARD, useClass: AuthGuard },
+    { provide: APP_GUARD, useClass: RolesGuard },
+  ],
   exports: [AuthService]
 })
 export class AuthModule { }
