@@ -1,11 +1,17 @@
 import { Controller, Body, HttpCode, HttpStatus, Get, Query, DefaultValuePipe, ParseIntPipe, Param, Delete, Patch, ParseUUIDPipe } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { Role } from 'src/generated/prisma/enums';
+import { UseGuards } from '@nestjs/common';
+import { RolesGuard } from 'src/auth/guards/role.guard';
 
 @Controller('users')
 export class UsersController {
     constructor(private readonly userService: UsersService) { }
 
+    @UseGuards(RolesGuard)
+    @Roles(Role.ADMIN)
     @Get()
     @HttpCode(HttpStatus.OK)
     async findAll(
