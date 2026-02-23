@@ -5,12 +5,13 @@ info:
 
 http:
   method: POST
-  url: http://localhost:3000/auth/logout
+  url: http://localhost:3000/auth/login
   body:
     type: json
     data: |-
       {
-        refreshToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYzI0MzZmMC0zYWY1LTRlNDYtOWRjZC05Y2E1MjdhZTU3ZGEiLCJpYXQiOjE3NzE1NDAwNzksImV4cCI6MTc3MjE0NDg3OX0.SdwgMsOGsDnuKlPaK5hIYsTE7UTRdXk60t0kEjILWJ4"
+        "email": "test@example.com",
+        "password": "Oasis91350?"
       }
   auth:
     type: bearer

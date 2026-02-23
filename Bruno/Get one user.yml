@@ -1,0 +1,17 @@
+info:
+  name: Get one user
+  type: http
+  seq: 4
+
+http:
+  method: GET
+  url: http://localhost:3000/users/cc2436f0-3af5-4e46-9dcd-9ca527ae57da
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYzI0MzZmMC0zYWY1LTRlNDYtOWRjZC05Y2E1MjdhZTU3ZGEiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc3MTg4NjcwMCwiZXhwIjoxNzcxODg3NjAwfQ.EP-hGnUmW3WUKxvdUtDrh1A7G0D-vSre7NIv3Jmxoa8
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

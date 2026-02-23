@@ -13,7 +13,9 @@ http:
     - name: take
       value: "1"
       type: query
-  auth: inherit
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYzI0MzZmMC0zYWY1LTRlNDYtOWRjZC05Y2E1MjdhZTU3ZGEiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NzE4ODY5OTksImV4cCI6MTc3MTg4Nzg5OX0.8U_-m8Su4s8KA-n7lttER7WOweujeL58uwaP3J6wjiI
 
 settings:
   encodeUrl: true

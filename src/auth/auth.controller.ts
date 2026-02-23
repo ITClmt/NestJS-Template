@@ -6,11 +6,14 @@ import { CurrentUser } from './decorators/current-user.decorator';
 import type { JwtPayload } from './types/jwt-payload.type';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { RefreshTokenDto } from './dto/refresh_token.dto';
+import { Throttle } from '@nestjs/throttler';
 
+@Throttle({ auth: { ttl: 60000, limit: 5 } })
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) { }
 
+    @Throttle({ auth: { limit: 3, ttl: 60000 } })
     @Public()
     @Post('login')
     @HttpCode(HttpStatus.OK)
